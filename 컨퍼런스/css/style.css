@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+*{margin: 0; padding: 0; box-sizing: border-box;}
+ul,li{list-style: none;}
+a{text-decoration: none; color: inherit;}
+body{font-family: "Noto Sans";}
+
+.container{
+  width: 1152px;
+  margin: 0 auto;
+  padding: 0 12px;
+}
+
+header{
+  background-color: #fff;
+}
+header > .container{
+  height: 160px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topNav{
+  display: flex;
+}
+.topNav > ul{
+  display: flex;
+  line-height: 30px;
+}
+.topNav > .icon > li{
+  margin: 0 10px;
+}
+.topNav > .login > li a{
+  padding: 0 20px;
+  color: #000;
+  font-family: "Noto Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  }
+.topNav > .login > li+li a{
+  border-left: 1px solid #999;
+}
+
+#banner{
+  min-width: 1152px;
+  height: 520px;
+  background-color: #000;
+  background-image: url(bg\ 1.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+#banner > .container{
+  text-align: center;
+  padding-top: 20px;
+}
+
+nav.gnb{
+  min-width: 1152px;
+  background-color:#FCE254 ;
+  padding: 30px 0;
+}
+nav.gnb > ul{
+  width: 1152px;
+  height: 20px;
+  margin: 0 auto;
+  display: flex;
+}
+nav.gnb > ul > li{
+  width: 16.66666%;
+  text-align: center;
+  color: #333;
+  font-family: "Noto Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+nav.gnb > ul >li+li{
+  border-left: 1px solid #666;
+}
+
+#notice > .container{
+  padding: 92px 12px;
+  display: flex;
+  justify-content: space-between;
+}
+#notice .notice_wrap{
+  width: 660px;
+}
+#notice .title{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+#notice .title > h1{
+  color: #333;
+  font-family: "Noto Sans";
+  font-size: 18px;
+  font-style: normal; 
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom: 10px;
+}
+#notice .title > button{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  font-family: "Noto Sans";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+table{
+  width: 100%;
+  color: #333;
+  font-family: "Noto Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border-collapse: collapse;
+}
+table tr{
+  border-top: 1px solid #999;
+}
+table tr:last-child{
+  border-bottom: 1px solid #999;
+}
+table td{
+  height: 46px;
+}
+table td:first-child{
+  padding-left: 24px;
+  position: relative;
+}
+table td:last-child{
+  text-align: right;
+}
+table td:first-child::before{
+  content: "";
+  position: absolute;
+  width: 4px; height: 4px;
+  background-color: #333;
+  border-radius: 50%;
+  left: 10px;
+  top: calc(50% - 2px);
+}
+
+footer{
+  min-width: 1152px;
+  background-color: #000;
+  color: #999;
+}
+footer > .container{
+  display: flex;
+  height: 100px;
+  justify-content: flex-end;
+  align-items: center;
+}
+footer h2{
+  font-size: 14px;
+  color: #fff;
+  margin-right: 40px;
+}
+footer p{
+  color: #999;
+  font-family: "Noto Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-right: 20px;
+}
+footer select{
+  width: 120px; height: 26px;
+  background-color: transparent;
+  color: #999;
+  font-size: 14px;
+  border: 1px solid #999;
+  text-indent: 10px;
+  /* appearance: none; 확장 버튼 삭제 */
+}
