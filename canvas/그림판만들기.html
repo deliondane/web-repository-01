@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>그림판 만들기</title>
+  <style>
+    .color-btn{
+      width:30px;
+      height:30px;
+      border:0;
+      border-radius: 50%;
+      cursor:pointer;
+    }
+    .color-btn[data-color="black"]{background-color:black;}
+    .color-btn[data-color="red"]{background-color:red;}
+    .color-btn[data-color="green"]{background-color:green;}
+    .color-btn[data-color="blue"]{background-color:blue;}
+
+    .image-btn{
+      width:30px;
+      height:30px;
+      border:0;
+      background:url(img/star.png) center/cover;
+      cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+  <canvas class="canvas" width="600" height="400" style="background:#eee;"></canvas>
+  <div class="control">
+    <button class="color-btn" data-type="color" data-color="black"></button>
+    <button class="color-btn" data-type="color" data-color="red"></button>
+    <button class="color-btn" data-type="color" data-color="green"></button>
+    <button class="color-btn" data-type="color" data-color="blue"></button>
+    <button class="image-btn" data-type="image"></button>
+    <button class="color-btn" data-type="clear"></button>
+  </div>
+
+  <button class="save-btn">이미지 저장</button>
+  <div class="result-image"></div>
+
+  <script>
+    const canvas = document.querySelector(".canvas");
+    const ctx = canvas.getContext("2d");
+    const control = document.querySelector(".control");
+    const saveBtn = document.querySelector(".save-btn");
+    const resultImage = document.querySelector(".result-image");
+
+    let drawingMode; //true일때만 그려짐
+    let colorVal = "black";//default = 검은색
+    let brush = 'color';//'color', 'image', "clear"
+
+    //이미지 객체 생성
+    const imgEl = new Image();
+    imgEl.src = "img/star.png";
+
+    function downHandler(){ //마우스 버튼을 눌렀을때 그려짐
+      drawingMode = true;
+    }
+    function upHandler(){ //마우스 버튼을 누리지 않으면 안그려짐
+      drawingMode = false;
+    }
+    function moveHandler(e){//마우스가 움직이면 호출됨
+      if(!drawingMode) return; //drawingMode가 false면 함수를 종료함
+      switch(brush){
+        case 'color': //brush가 color면 원이 그려짐
+          ctx.beginPath();
+          //마우스 위치값을 동그라미의 위치값으로 대입
+          ctx.arc(e.offsetX, e.offsetY, 10, 0, Math.PI*2, false);
+          ctx.fill();
+          break;
+        case 'image': //brush가 image면 이미지가 그려짐
+          ctx.drawImage(imgEl, e.offsetX-25, e.offsetY-25, 50, 50);
+          break;
+        case 'clear'://brush가 clear면 지우개 적용
+          ctx.clearRect(e.offsetX-10, e.offsetY-10, 20, 20)
+      }
+    }
+
+    function setColor(e){
+      //brush변수의 값을 클릭한 버튼의 data-type값으로 변경
+      brush = e.target.getAttribute("data-type");
+      //colorVal값을 클릭한 버튼의 data-color변경
+      colorVal = e.target.getAttribute("data-color");
+      //fillStyle을 colorVal값으로 설정
+      ctx.fillStyle = colorVal;
+    }
+    function createImage(){
+      //변수url에 canvas에 그린 이미지의 dataURL을 할당
+      const url = canvas.toDataURL('image/png');
+      //이미지 요소 생성
+      const imgEl = new Image();
+      imgEl.src = url;//생성한 이미지의 url속성값을 설정
+      resultImage.appendChild(imgEl);//resultImage요소에 이미지 추가
+      //캔버스에 그려진 이미지와 동그라미를 모두 지워줍니다.
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    //이벤트 리스너 추가
+    canvas.addEventListener('mousedown', downHandler);//마우스 버튼을 눌렀을때
+    canvas.addEventListener('mouseup', upHandler);//마우스 버튼을 땠을때
+    canvas.addEventListener('mousemove', moveHandler);//마우스가 움직였을 때
+    control.addEventListener("click", setColor);//control요소를 클릭하면 setColor함수를호출하여 색상변경
+    saveBtn.addEventListener("click", createImage);//세이브버튼을 클릭하면 createImage함수를 호출하여 이미지를 저장
+
+    
+  </script>
+</body>
+</html>

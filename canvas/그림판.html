@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>그림판 만들기</title>
+  <style>
+    .color-btn{
+      width:30px;
+      height:30px;
+      border:0;
+      border-radius: 50%;
+      cursor:pointer;
+    }
+    .color-btn[data-color="black"]{background-color:black;}
+    .color-btn[data-color="red"]{background-color:red;}
+    .color-btn[data-color="green"]{background-color:green;}
+    .color-btn[data-color="blue"]{background-color:blue;}
+
+    .image-btn{
+      width:30px;
+      height:30px;
+      border:0;
+      background:url(img/star.png) center/cover;
+      cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+  <canvas class="canvas" width="600" height="400" style="background:#eee;"></canvas>
+  <div class="control">
+    <button class="color-btn" data-type="color" data-color="black"></button>
+    <button class="color-btn" data-type="color" data-color="red"></button>
+    <button class="color-btn" data-type="color" data-color="green"></button>
+    <button class="color-btn" data-type="color" data-color="blue"></button>
+    <button class="image-btn" data-type="image"></button>
+    <button class="color-btn" data-type="clear"></button>
+  </div>
+
+  <button class="save-btn">이미지 저장</button>
+  <div class="result-image"></div>
+
+  <script>
+    const canvas = document.querySelector('.canvas');
+    const ctx = canvas.getContext('2d');
+    const control = document.querySelector(".control");
+    const saveBtn = document.querySelector('.save-btn');
+    const resultImage = document.querySelector('.result-image');
+
+    let drawingMode;
+    let colorVal = "black";
+    let brush = 'color';
+
+    const imgEl = new Image();
+    imgEl.src = "img/star.png";
+
+    function downHandler(){
+      drawingMode = true;
+    }
+
+    function upHandler(){
+      drawingMode = false;
+    }
+    function moveHandler(e){
+      if(!drawingMode) return;
+      switch(brush){
+        case 'color':
+          ctx.beginPath();
+          ctx.arc(e.offsetX, e.offsetY, 10, 0, Math.PI*2, false);
+          ctx.fill();
+          break;
+        case 'image':
+          ctx.drawImage(imgEl, e.offsetX-25, e.offsetY-10, 20, 20)
+          break;
+        case 'clear':
+          ctx.arc(e.offsetX-10, e.offsetY-10, 20, 20)
+          //ctx.arc(e.offsetX-10, y.offsetY-10, 10, 0, Math.PI*2, false);
+      }
+    }
+
+    function setColor(e){
+      brush = e.target.getAttribute('data-type');
+      colorVal = e.target.getAttribute('data-color');
+      ctx.fillStyle = colorVal;
+    }
+
+    function createImage(){
+      const url = canvas.toDataURL('image/png');
+      const imgEl = new Image();
+      imgEl.src = url;
+      resultImage.appendChild(imgEl);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    
+    canvas.addEventListener('mousedown', downHandler);
+    canvas.addEventListener('mouseup', upHandler);
+    canvas.addEventListener('mousemove', moveHandler);
+    control.addEventListener("click", setColor);//control요소를 클릭하면 setColor함수를호출하여 색상변경
+    saveBtn.addEventListener("click", createImage);//세이
+
+  </script>
+</body>
+</html>
